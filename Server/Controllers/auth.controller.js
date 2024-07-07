@@ -7,14 +7,14 @@ export async function SignUp(req, res) {
         const { fullName, username, password, confirmPassword, gender } = req.body
 
         if (password !== confirmPassword) {
-            res.status(400).send("Passwords doen't match!")
+            res.status(400).json({ error: "Passwords doen't match!" })
             return
         }
 
         const user = await User.findOne({ username })
 
         if (user) {
-            return res.status(400).send("Username already exists!")
+            return res.status(400).json({ error: "Username already exists!" })
         }
 
         // HASH PASSWORD
@@ -48,12 +48,12 @@ export async function SignUp(req, res) {
                     profilePic: newUser.profilePic,
                 })
             } catch (error) {
-                res.status(400).send("Invalid user data!")
+                res.status(400).json({ error: "Invalid user data!" })
             }
         }
 
     } catch (error) {
-        res.status(500).send("Something went wrong!")
+        res.status(500).json({ error: "Something went wrong!" })
     }
 }
 
@@ -64,14 +64,14 @@ export async function Login(req, res) {
         const user = await User.findOne({ username })
 
         if (!user) {
-            res.status(400).send(`${username} named user doesn't exists!`)
+            res.status(400).json({ error: `${username} named user doesn't exists!` })
             return
         }
 
         const CheckPass = await bcryptjs.compare(password, user.password)
 
         if (!CheckPass) {
-            res.status(400).send("Password or username is not correct!")
+            res.status(400).json({ error: "Password or username is not correct!" })
             return
         }
 
@@ -85,15 +85,15 @@ export async function Login(req, res) {
         })
 
     } catch (error) {
-        res.status(500).send("Something went wrong!")
+        res.status(500).json({ error: "Something went wrong!" })
     }
 }
 
 export async function Logout(req, res) {
     try {
         res.cookie("jwt", "", { maxAge: 0 })
-        res.status(201).send("Logged out successfully!")
+        res.status(201).json({ message: "Logged out successfully!" })
     } catch (error) {
-        res.status(500).send("Something went wrong!")
+        res.status(500).json({ error: "Something went wrong!" })
     }
 }

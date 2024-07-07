@@ -30,10 +30,10 @@ export async function sendMessage(req, res) {
         // Paralel
         await Promise.all([newMessage.save(), chat.save()])
 
-        res.status(201).send(newMessage)
+        res.status(201).json(newMessage)
 
     } catch (error) {
-        res.status(500).send("Something went wrong!")
+        res.status(500).json({ error: "Something went wrong!" })
     }
 }
 
@@ -48,12 +48,12 @@ export async function getMessages(req, res) {
             participants: { $all: [senderId, userToChat] },
         }).populate("messages")
 
-        if (!chat) return res.status(400).send([]);
+        if (!chat) return res.status(400).json([]);
 
         const messages = chat.messages
 
-        res.status(201).send(messages)
+        res.status(201).json({ messages })
     } catch (error) {
-        res.status(500).send("Something went wrong!")
+        res.status(500).json({ error: "Something went wrong!" })
     }
 }

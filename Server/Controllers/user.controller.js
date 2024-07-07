@@ -7,9 +7,9 @@ export async function getUsersForSideBar(req, res) {
         // All users except you
         const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password")
 
-        res.status(201).send(filteredUsers)
+        res.status(201).json(filteredUsers)
 
     } catch (error) {
-        res.status(400).send("Something went wrong!")
+        res.status(400).json({ error: "Something went wrong!" })
     }
 }
