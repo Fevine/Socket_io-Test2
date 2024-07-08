@@ -52,7 +52,7 @@ export async function getMessages(req, res) {
 
         const messages = chat.messages
 
-        res.status(201).json({ messages })
+        res.status(201).json(messages)
     } catch (error) {
         res.status(500).json({ error: "Something went wrong!" })
     }
