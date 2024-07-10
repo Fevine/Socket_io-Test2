@@ -12,6 +12,7 @@ function Message({ message }) {
   const profilePic = fromMe ? authUser.profilePic : selectedChat?.profilePic
   const bubleBgColor = fromMe ? "bg-blue-500" : "";
   const formatedTime = extractTime(message.createdAt)
+  const shakeClass = message.shouldShake ? "shake" : ""
 
 
   return (
@@ -25,7 +26,7 @@ function Message({ message }) {
         </div>
       </div>
 
-      <div className={`chat-bubble text-white ${bubleBgColor} pb-2`}>{message.message}</div>
+      <div className={`chat-bubble text-white ${bubleBgColor} ${shakeClass} pb-2`}>{message.message}</div>
       <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">{formatedTime}</div>
     </div>
   )

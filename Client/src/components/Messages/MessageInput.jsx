@@ -10,7 +10,7 @@ function MessageInput() {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    if (!message) return;
+    if (!message || !message.trim()) return setMessage("");
 
     await sendMessage(message)
     setMessage("")

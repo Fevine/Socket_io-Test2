@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import useChat from '../zustand/useChat'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
+import useChat from '../zustand/useChat'
 
 function useSendMessage() {
 
-  const [lodaing, setLodaing] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { messages, setMessages, selectedChat } = useChat()
 
   async function sendMessage(message) {
-    setLodaing(true)
+    setLoading(true)
     try {
       const res = await fetch(`/api/messages/send/${selectedChat._id}`, {
         method: "POST",
@@ -26,11 +26,11 @@ function useSendMessage() {
     } catch (error) {
       toast.error(error.message)
     } finally {
-      setLodaing(false)
+      setLoading(false)
     }
   }
 
-  return { sendMessage, lodaing }
+  return { sendMessage, loading }
 }
 
 export default useSendMessage

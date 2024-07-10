@@ -6,13 +6,13 @@ import AuthRouter from './Routes/auth.routes.js'
 import UserRouter from './Routes/user.routes.js'
 import MessageRouter from './Routes/message.routes.js'
 import { connectionToDB } from './DB/connectionToDB.js'
+import { app, server } from './Socket/socket.js'
 
 dotenv.config()
 
 const PORT = process.env.PORT || 5000
 const CON_URL = process.env.CON_URL
 
-const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
@@ -24,7 +24,7 @@ app.use("/api/messages", MessageRouter)
 app.use("/api/users", UserRouter)
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     connectionToDB()
     console.log(`Server Online at ${PORT}`);
 })

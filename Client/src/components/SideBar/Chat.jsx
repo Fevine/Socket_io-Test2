@@ -1,11 +1,16 @@
 import React from 'react'
 import useChat from './../../zustand/useChat';
+import { useSocketContext } from '../../context/SocketContext';
 
 function Chat({ chat, lastIdx, emoji }) {
 
   const { selectedChat, setSelectedChat, } = useChat()
+  const { onlineUsers } = useSocketContext()
 
+  const isOnline = onlineUsers.includes(chat._id)
   const isSelected = selectedChat?._id === chat._id
+
+
   return (
     <>
       <div className={`flex gap-2 items-center transition-opacity hover:bg-sky-500 rounded p-2 py-1 cursor-pointer
@@ -13,7 +18,7 @@ function Chat({ chat, lastIdx, emoji }) {
       `}
         onClick={() => setSelectedChat(chat)}
       >
-        <div className="avatar online">
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-12 rounded-full">
             <img alt='user avatar' src={chat.profilePic} />
           </div>
